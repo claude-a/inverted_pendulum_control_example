@@ -77,3 +77,9 @@ class FurutaPendulum_PID_Controller:
         self._dalpha_tau = DALPHA_TAU_DEFAULT  # [s]
         self._dtheta_filt = 0.0
         self._dtheta_tau = DTHETA_TAU_DEFAULT  # [s]
+
+    def reset(self) -> None:
+        self._int_theta = 0.0
+        self._int_alpha = 0.0
+        self._dalpha_filt = 0.0
+        self._dtheta_filt = 0.0
