@@ -8,9 +8,9 @@ namespace py = pybind11;
 
 static FurutaPendulum_PID_Controller controller;
 
-void initialize(void) { controller = FurutaPendulum_PID_Controller(); }
+void initialize(double ts) { controller = FurutaPendulum_PID_Controller(ts); }
 
-PYBIND11_MODULE(FurutaPendulumPIDControllerSIL, m) {
+PYBIND11_MODULE(FurutaPendulumPidControllerSIL, m) {
   m.doc() = "SIL wrapper for FurutaPendulum_PID_Controller";
   m.def("initialize", &initialize, "Initialize the module");
 }
