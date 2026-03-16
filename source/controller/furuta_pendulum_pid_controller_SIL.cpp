@@ -10,9 +10,13 @@ static FurutaPendulum_PID_Controller controller;
 
 void initialize(double ts) { controller = FurutaPendulum_PID_Controller(ts); }
 
+// Method: reset
+void reset() { controller.reset(); }
+
 PYBIND11_MODULE(FurutaPendulumPidControllerSIL, m) {
   m.doc() = "SIL wrapper for FurutaPendulum_PID_Controller";
   m.def("initialize", &initialize, "Initialize the module");
+  m.def("reset", &reset, "reset method");
 }
 
 } // namespace furuta_pendulum_pid_controller_SIL

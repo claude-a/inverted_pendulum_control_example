@@ -51,3 +51,11 @@ FurutaPendulum_PID_Controller::FurutaPendulum_PID_Controller(
   this->_dtheta_filt = 0.0;
   this->_dtheta_tau = DTHETA_TAU_DEFAULT;
 }
+
+// Reset method mirrors the Python reset() which clears internal states
+void FurutaPendulum_PID_Controller::reset() noexcept {
+  this->_int_theta = 0.0;
+  this->_int_alpha = 0.0;
+  this->_dalpha_filt = 0.0;
+  this->_dtheta_filt = 0.0;
+}

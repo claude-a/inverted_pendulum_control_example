@@ -77,6 +77,9 @@ public:
   double _dtheta_filt;
   double _dtheta_tau;
 
+  // Reset method mirrors the newly added Python method that clears internal states
+  void reset() noexcept;
+
   // Destructor defaulted
   ~FurutaPendulum_PID_Controller() = default;
 
