@@ -23,7 +23,7 @@ FurutaPendulum_PID_Controller::FurutaPendulum_PID_Controller(
   }
 
   // Mapping sign
-  if (theta_to_alpha_sign_ >= 0.0) {
+  if (theta_to_alpha_sign_ >= 0) {
     theta_to_alpha_sign = 1.0;
   } else {
     theta_to_alpha_sign = -1.0;
