@@ -23,7 +23,11 @@ FurutaPendulum_PID_Controller::FurutaPendulum_PID_Controller(
   }
 
   // Mapping sign
-  theta_to_alpha_sign = (theta_to_alpha_sign_ >= 0.0) ? 1.0 : -1.0;
+  if (theta_to_alpha_sign_ >= 0.0) {
+    theta_to_alpha_sign = 1.0;
+  } else {
+    theta_to_alpha_sign = -1.0;
+  }
 
   // Tuning gains (start conservative; tune as needed)
   kp_theta = KP_THETA_DEFAULT;
