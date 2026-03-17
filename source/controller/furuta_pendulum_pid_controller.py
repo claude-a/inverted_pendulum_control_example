@@ -54,7 +54,7 @@ class FurutaPendulum_PID_Controller:
 
         # Mapping sign: if theta is positive, we want alpha_ref_cmd to be positive.
         # If your plant uses opposite sign conventions, set this to -1.0.
-        if theta_to_alpha_sign >= 0.0:
+        if theta_to_alpha_sign >= 0:
             self.theta_to_alpha_sign = 1.0
         else:
             self.theta_to_alpha_sign = -1.0
