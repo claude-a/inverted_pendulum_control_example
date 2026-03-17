@@ -1,17 +1,46 @@
-// FurutaPendulum_PID_Controller.cpp
-// Implementation file corresponding to the generated FurutaPendulum_PID_Controller.hpp
-// Converted from Python: FurutaPendulum_PID_Controller
-//
-// Note: The provided header is header-only and contains an inline constructor
-// that fully initializes the class. There are no out-of-line member
-// function definitions required. This translation unit is intentionally
-// minimal to satisfy build systems that expect a .cpp file for the module.
+#include "furuta_pendulum_pid_controller.hpp"
 
-#include <cmath>
+FurutaPendulum_PID_Controller::FurutaPendulum_PID_Controller(
+    double Ts_ = TS_DEFAULT, double theta_ref_rad_ = 0.0,
+    double alpha_ref_rad_ = 0.0, double v_limit_ = V_LIMIT_DEFAULT,
+    double alpha_ref_limit_rad_ = std::numeric_limits<double>::quiet_NaN(),
+    double theta_to_alpha_sign_ = THETA_TO_ALPHA_SIGN_DEFAULT) {
+  // Sample time
+  Ts = static_cast<double>(Ts_);
 
-// No out-of-line member functions to implement for
-// FurutaPendulum_PID_Controller. All state and initialization are handled
-// inline in the header. Provide a small no-op symbol to ensure this TU
-// is non-empty when linked into projects that expect a compiled object.
+  // References
+  theta_ref_rad = static_cast<double>(theta_ref_rad_);
+  alpha_ref_rad = static_cast<double>(alpha_ref_rad_);
 
-extern "C" void furuta_pendulum_pid_controller_translation_unit_marker() {}
+  // Voltage saturation
+  v_limit = std::abs(static_cast<double>(v_limit_));
+
+  // Alpha ref limit: if NaN (used as None), use default
+  if (std::isnan(alpha_ref_limit_rad_)) {
+    alpha_ref_limit_rad = std::abs(ALPHA_REF_LIMIT_RAD_DEFAULT);
+  } else {
+    alpha_ref_limit_rad = std::abs(static_cast<double>(alpha_ref_limit_rad_));
+  }
+
+  // Mapping sign
+  theta_to_alpha_sign = (theta_to_alpha_sign_ >= 0.0) ? 1.0 : -1.0;
+
+  // Tuning gains (start conservative; tune as needed)
+  kp_theta = KP_THETA_DEFAULT;
+  ki_theta = KI_THETA_DEFAULT;
+  kd_theta = KD_THETA_DEFAULT;
+
+  kp_alpha = KP_ALPHA_DEFAULT;
+  ki_alpha = KI_ALPHA_DEFAULT;
+  kd_alpha = KD_ALPHA_DEFAULT;
+
+  // Integrator states
+  _int_theta = 0.0;
+  _int_alpha = 0.0;
+
+  // Derivative filtering
+  _dalpha_filt = 0.0;
+  _dalpha_tau = DALPHA_TAU_DEFAULT;
+  _dtheta_filt = 0.0;
+  _dtheta_tau = DTHETA_TAU_DEFAULT;
+}
