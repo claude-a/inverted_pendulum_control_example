@@ -7,6 +7,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 
+KP_THETA_DEFAULT = 0.1
+
 
 class FurutaPendulum_PID_Controller:
 
@@ -14,7 +16,7 @@ class FurutaPendulum_PID_Controller:
         self
     ) -> None:
 
-        pass
+        self.kp_theta = KP_THETA_DEFAULT
 
     def calculate_manipulation(
         self,
@@ -24,4 +26,4 @@ class FurutaPendulum_PID_Controller:
         dalpha: float,
     ) -> float:
 
-        return 0
+        return -self.kp_theta * theta
